@@ -6,6 +6,7 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import Subscriptions from "../pages/Subscriptions/Subscriptions";
 import ProtectedRoute from "../Components/ProtectedRoute/ProtectedRoute";
 import AddSubscription from "../pages/AddSubscription/AddSubscription";
+import EditSubscription from "../pages/EditSubscription/EditSubscription";
 
 export default function AppRouter() {
   return (
@@ -39,6 +40,8 @@ export default function AppRouter() {
           </ProtectedRoute>
         }
       />
+
+      <Route path="/subscriptions/edit/:id" element={<EditSubscription />} />
     </Routes>
   );
 }

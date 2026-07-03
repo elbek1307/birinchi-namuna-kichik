@@ -1,32 +1,38 @@
-import React from "react";
+import React, { useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import { useState } from "react";
-import { subscriptions as data } from "../../services/subscriptionData";
+import { useNavigate } from "react-router-dom"; 
+import { subscriptions as initialData } from "../../services/subscriptionData";
 
 const AddSubscription = () => {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
+  const [nextPayment, setnextPayment] = useState("")
   const [status, setStatus] = useState("Active");
-  const [subscriptions, setSubscriptions] = useState(data);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    
+    const savedData = JSON.parse(localStorage.getItem("subsData")) || initialData;
+
+   
     const newSubscription = {
+      id: Date.now(),
       name,
+      nextPayment,
       price,
       status,
     };
 
-    setSubscriptions([
-      ...subscriptions,
-      {
-        id: Date.now(),
-        name,
-        price,
-        status,
-      },
-    ]);
+    
+    const updatedData = [...savedData, newSubscription];
+
+   
+    localStorage.setItem("subsData", JSON.stringify(updatedData));
+
+   
+    navigate("/subscriptions");
   };
 
   return (
@@ -51,6 +57,14 @@ const AddSubscription = () => {
           onChange={(e) => setPrice(e.target.value)}
         />
 
+        <br />
+        <br />
+
+        <input type="date"
+        placeholder="nexPayment"
+        value={nextPayment}
+        onChange={(e) => setnextPayment(e.target.value)}/>
+        
         <br />
         <br />
 

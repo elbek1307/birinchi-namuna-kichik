@@ -12,12 +12,14 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-    // Fake Login
+  
     if (email === "admin@gmail.com" && password === "123456") {
       login({
         name: "Admin",
         email,
       });
+
+      
 
       navigate("/dashboard");
     } else {
