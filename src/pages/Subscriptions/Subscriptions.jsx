@@ -4,15 +4,17 @@ import SubscriptionTable from "../../Components/SubscriptionTable/SubscriptionTa
 import { useState } from "react";
 import Search from "../../Components/Search/Search";
 import { subscriptions as initialData } from "../../services/subscriptionData";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Subscriptions() {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
+
   const [search, setSearch] = useState("");
 
   const [tableData, setTableData] = useState(() => {
-
     const saved = localStorage.getItem("subsData");
 
-   
     return saved ? JSON.parse(saved) : initialData;
   });
 
@@ -40,14 +42,15 @@ export default function Subscriptions() {
       <br />
       <br />
 
-      <Link to="/subscriptions/add">
-        <button>Add Subscription</button>
-      </Link>
+      {isAdmin && (
+        <Link to="/subscriptions/add">
+          <button>Add Subscription</button>
+        </Link>
+      )}
 
       <br />
       <br />
 
-      
       <SubscriptionTable
         subscriptions={filteredSubscriptions}
         onDelete={handleDelete}

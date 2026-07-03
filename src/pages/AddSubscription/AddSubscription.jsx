@@ -1,22 +1,30 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../../layouts/MainLayout";
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
 import { subscriptions as initialData } from "../../services/subscriptionData";
+import { useAuth } from "../../context/AuthContext";
 
 const AddSubscription = () => {
+  const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
-  const [nextPayment, setnextPayment] = useState("")
+  const [nextPayment, setnextPayment] = useState("");
   const [status, setStatus] = useState("Active");
-  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isAdmin) {
+      navigate("/subscriptions");
+    }
+  }, [isAdmin, navigate]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    
     const savedData = JSON.parse(localStorage.getItem("subsData")) || initialData;
 
-   
     const newSubscription = {
       id: Date.now(),
       name,
@@ -25,15 +33,16 @@ const AddSubscription = () => {
       status,
     };
 
-    
     const updatedData = [...savedData, newSubscription];
 
-   
     localStorage.setItem("subsData", JSON.stringify(updatedData));
 
-   
     navigate("/subscriptions");
   };
+
+  if (!isAdmin) {
+    return null;
+  }
 
   return (
     <MainLayout>
@@ -60,11 +69,13 @@ const AddSubscription = () => {
         <br />
         <br />
 
-        <input type="date"
-        placeholder="nexPayment"
-        value={nextPayment}
-        onChange={(e) => setnextPayment(e.target.value)}/>
-        
+        <input
+          type="date"
+          placeholder="nexPayment"
+          value={nextPayment}
+          onChange={(e) => setnextPayment(e.target.value)}
+        />
+
         <br />
         <br />
 

@@ -1,0 +1,43 @@
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background: var(--sidebar);
+  color: var(--text);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar h3 {
+  margin-bottom: 20px;
+  color: var(--text);
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sidebar li {
+  padding: 10px;
+  border-radius: 8px;
+  transition: 0.2s;
+}
+
+.sidebar li:hover {
+  background: var(--hover);
+}
+
+.sidebar a {
+  text-decoration: none;
+  color: var(--muted);
+  display: block;
+}
+
+.sidebar a:hover {
+  color: var(--text);
+}

@@ -41,6 +41,15 @@ export default function AppRouter() {
         }
       />
 
+      <Route
+  path="/subscriptions/edit/:id"
+  element={
+    <ProtectedRoute>
+      <EditSubscription />
+    </ProtectedRoute>
+  }
+/>
+
       <Route path="/subscriptions/edit/:id" element={<EditSubscription />} />
     </Routes>
   );

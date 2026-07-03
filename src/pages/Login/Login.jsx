@@ -12,14 +12,20 @@ export default function Login() {
   const handleLogin = (e) => {
     e.preventDefault();
 
-  
     if (email === "admin@gmail.com" && password === "123456") {
       login({
         name: "Admin",
         email,
+        role: "admin",
       });
 
-      
+      navigate("/dashboard");
+    } else if (email === "user@gmail.com" && password === "123456") {
+      login({
+        name: "User",
+        email,
+        role: "user",
+      });
 
       navigate("/dashboard");
     } else {
