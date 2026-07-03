@@ -1,6 +1,7 @@
 import React from "react";
 import MainLayout from "../../layouts/MainLayout";
 import { useState } from "react";
+import { subscriptions as data } from "../../services/subscriptionData";
 
 const AddSubscription = () => {
   const [name, setName] = useState("");
@@ -8,26 +9,25 @@ const AddSubscription = () => {
   const [status, setStatus] = useState("Active");
   const [subscriptions, setSubscriptions] = useState(data);
 
-
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const newSubscription = {
-    name,
-    price,
-    status,
+    const newSubscription = {
+      name,
+      price,
+      status,
+    };
+
+    setSubscriptions([
+      ...subscriptions,
+      {
+        id: Date.now(),
+        name,
+        price,
+        status,
+      },
+    ]);
   };
-
-  setSubscriptions([
-  ...subscriptions,
-  {
-    id: Date.now(),
-    name,
-    price,
-    status,
-  },
-]);
-};
 
   return (
     <MainLayout>
@@ -35,34 +35,34 @@ const AddSubscription = () => {
 
       <form onSubmit={handleSubmit}>
         <input
-        type="text"
-        placeholder="Subscription name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-      />
+          type="text"
+          placeholder="Subscription name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
 
-      <br />
-      <br />
+        <br />
+        <br />
 
-      <input
-        type="number"
-        placeholder="Price"
-        value={price}
-        onChange={(e) => setPrice(e.target.value)}
-      />
+        <input
+          type="number"
+          placeholder="Price"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+        />
 
-      <br />
-      <br />
+        <br />
+        <br />
 
-      <select value={status} onChange={(e) => setStatus(e.target.value)}>
-        <option value="Active">Active</option>
-        <option value="Paused">Paused</option>
-      </select>
+        <select value={status} onChange={(e) => setStatus(e.target.value)}>
+          <option value="Active">Active</option>
+          <option value="Paused">Paused</option>
+        </select>
 
-      <br />
-      <br />
+        <br />
+        <br />
 
-      <button type="submit">Save</button>
+        <button type="submit">Save</button>
       </form>
     </MainLayout>
   );
